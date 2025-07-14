@@ -18,11 +18,7 @@ col1, col2 = st.columns(2)
 question_type = col1.selectbox("Question Type", ["Multiple Choice", "Short Answer", "True/False"])
 difficulty = col2.selectbox("Difficulty", ["easy", "medium", "hard"])
 
-num_questions = st.slider("🔢 Number of Questions", min_value=1, max_value=20, value=3)
-
-# Optional feedback section
-st.markdown("### 💬 Feedback (optional)")
-user_feedback = st.text_area("Any suggestions, issues, or thoughts?")
+num_questions = st.slider("🔢 Number of Questions", min_value=1, max_value=10, value=3)
 
 # Generate button
 if st.button("⚡ Generate Quiz"):
@@ -85,6 +81,4 @@ if st.button("⚡ Generate Quiz"):
             if questions:
                 st.download_button("⬇️ Download Quiz as PDF", output.getvalue(), file_name="quizcraft_quiz.pdf")
 
-# Footer or feedback display
-if user_feedback:
-    st.success("✅ Thank you for your feedback! It will help us improve.")
+
