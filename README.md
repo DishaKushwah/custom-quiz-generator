@@ -45,7 +45,7 @@ custom-quiz-generator/
 ├── outputs/                        # Stores generated questions/outputs
 ├── valhalla/                       # T5-based fine-tuned models
 ├── requirements.txt                # Project dependencies
-├── FineTuneAndEvaluationscores_CLEANED.ipynb  # Evaluation notebook
+├── FineTuneAndEvaluationscores.ipynb  # Evaluation notebook
 ├── README.md                       # Project documentation
 └── .gitignore                      # Git ignore rules
 ```
