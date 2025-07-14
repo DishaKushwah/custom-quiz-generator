@@ -1,3 +1,4 @@
+
 import random
 import nltk
 from nltk.corpus import stopwords
@@ -29,59 +30,74 @@ class AdvancedMCQGenerator:
                 key_concepts.append(sentence)
         return key_concepts[:5]  # Return top 5 key concepts
 
-    def generate_intelligent_question(self, concept, context):
-        """Generate a more nuanced and contextually relevant question"""
-        question_templates = [
-            f"What is the primary significance of {concept}?",
-            f"How does {concept} impact the broader context?",
-            f"What key role does {concept} play in the narrative?",
-            f"Explain the importance of {concept} in this context.",
-            f"What makes {concept} crucial to understanding the situation?"
-        ]
-        
-        return random.choice(question_templates)
+    def generate_intelligent_question(self, concept, context, difficulty):
+            if difficulty == 'easy':
+                templates = [
+                    f"What is {concept}?",
+                    f"Describe {concept}.",
+                    f"Define {concept}.",
+                    f"What do you understand by {concept}?",
+                    f"Give a simple explanation of {concept}."
+                ]
+            elif difficulty == 'hard':
+                templates = [
+                    f"In what way does {concept} reflect a broader implication?",
+                    f"Critically analyze the role of {concept} in the given context.",
+                    f"How can {concept} be interpreted in complex scenarios?",
+                    f"What deeper insights does {concept} provide?",
+                    f"Discuss the nuanced impact of {concept} in this context."
+                ]
+            else:  # medium
+                templates = [
+                    f"What is the primary significance of {concept}?",
+                    f"How does {concept} impact the broader context?",
+                    f"What key role does {concept} play in the narrative?",
+                    f"Explain the importance of {concept} in this context.",
+                    f"What makes {concept} crucial to understanding the situation?"
+                ]
+            return random.choice(templates)
 
-    def generate_contextual_distractors(self, correct_answer, context):
+    def generate_contextual_distractors(self, correct_answer, context, difficulty):
         """Create semantically related but incorrect distractors"""
         sentences = sent_tokenize(context)
         distractors = []
-        
         potential_distractors = [sent for sent in sentences if correct_answer.lower() not in sent.lower() and len(sent.split()) > 3]
-        
+        fallback_distractors = ["A partially related historical context","An alternative interpretation","A peripheral aspect of the main theme"]
         # Generating diverse distractors
         while len(distractors) < 3:
             if potential_distractors:
-                # Choose a unique distractor
                 distractor = random.choice(potential_distractors)
                 potential_distractors.remove(distractor)
                 words = word_tokenize(distractor)
-                key_phrase = ' '.join([word for word in words if word.lower() not in self.stop_words and len(word) > 2][:3])
-                distractors.append(key_phrase)
+                if difficulty == 'easy':
+                    phrase = ' '.join([w for w in words if w.lower() not in self.stop_words][:2])
+                elif difficulty == 'hard':
+                    phrase = ' '.join([w for w in words if w.lower() not in self.stop_words][:5])
+                else:  # medium
+                    phrase = ' '.join([w for w in words if w.lower() not in self.stop_words][:3])
+                distractors.append(phrase.strip())
             else:
-                fallback_distractors = ["A partially related historical context","An alternative interpretation","A peripheral aspect of the main theme"]
-                distractor = random.choice(fallback_distractors)
-                distractors.append(distractor)
+                distractors.append(random.choice(fallback_distractors))
         return distractors
 
-    def generate_mcq(self, context, num_questions=3):
+    def generate_mcq(self, context, num_questions=3, difficulty='medium'):
         """Generate Multiple Choice Questions"""
         # Validate context
         if not context or len(context.split()) < 30:
             raise ValueError("Context is too short. Provide more detailed text.")
         
-        # Generate questions
         mcq_questions = []
         key_concepts = self.extract_key_concepts(context)
         
         for concept in key_concepts[:num_questions]:
             try:
-                question = self.generate_intelligent_question(concept, context)      # Generate question
-                answer_result = self.qa_pipeline(question=question, context=context)      # Use QA pipeline to find the most relevant answer
-                correct_answer = answer_result['answer']    # Get correct answer
-                distractors = self.generate_contextual_distractors(correct_answer, context)     # Generate distractors
-                all_options = [correct_answer] + distractors    # Combine options
+                question = self.generate_intelligent_question(concept, context, difficulty)
+                answer_result = self.qa_pipeline(question=question, context=context)
+                correct_answer = answer_result['answer']
+                distractors = self.generate_contextual_distractors(correct_answer, context, difficulty)
+                all_options = [correct_answer] + distractors
                 random.shuffle(all_options)
-                correct_index = all_options.index(correct_answer)       # Determine correct option index
+                correct_index = all_options.index(correct_answer)  # Determine correct option index
                 mcq_questions.append({"question": question,"options": all_options,"correct_answer": correct_index})     # Create MCQ
             except Exception as e:
                 print(f"Error generating question: {e}")
@@ -91,8 +107,9 @@ def main():
     generator = AdvancedMCQGenerator()
     context = input("Enter context text: ")
     num_questions = int(input("How many questions do you want? "))
-    questions = generator.generate_mcq(context, num_questions)
-    
+    difficulty = input("Choose difficulty (easy / medium / hard): ").lower().strip()
+
+    questions = generator.generate_mcq(context, num_questions, difficulty)
     # Display and solve quiz
     print("\n--- Quiz Started ---")
     score = 0
