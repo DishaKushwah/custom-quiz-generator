@@ -70,7 +70,10 @@ if st.button("⚡ Generate Quiz"):
             elif question_type == "True/False":
                 try:
                     st.subheader("✅ True/False Questions")
-                    questions = generate_true_false(context, num_questions, difficulty)
+                    tf_generator = generate_true_false()  # Initialize the class
+                    sentences = tf_generator.validate_inputs(context, num_questions, difficulty)
+                    questions = tf_generator.generate_statements(context, num_questions, difficulty, sentences)
+                    
                     for idx, (statement, label) in enumerate(questions, 1):
                         st.markdown(f"**Q{idx}: {statement}**")
                         st.markdown(f"🟢 **Answer:** {'True' if label == 'ENTAILMENT' else 'False'}")
@@ -80,6 +83,7 @@ if st.button("⚡ Generate Quiz"):
                         output.write(f"Q{idx}: {statement}\nAnswer: {'True' if label == 'ENTAILMENT' else 'False'}\n\n")
                 except Exception as e:
                     st.error(f"❌ Failed to generate true/false questions: {str(e)}")
+
 
             # Download button if questions were generated
             if questions:
