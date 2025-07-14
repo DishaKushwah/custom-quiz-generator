@@ -15,7 +15,6 @@ class generate_true_false:
         sentences = sent_tokenize(context)
         return sentences
 
-    # Difficulty-based sentence modifier
     def apply_noise(self, sentence: str, level: str) -> str:
         if level == "easy":
             return sentence
@@ -52,11 +51,8 @@ class generate_true_false:
             print("Please enter 'true' or 'false'.")
 
     # Main quiz logic
-    def run_quiz(self):
+    def run_quiz(self, context, num_questions, difficulty):
         try:
-            context = input(">> Enter context text: ")
-            num_questions = int(input("\n>> How many questions do you want to generate? "))
-            difficulty = input("\n>> Enter difficulty level (easy/medium/hard): ").strip().lower()
             sentences = self.validate_inputs(context, num_questions, difficulty)
             questions = self.generate_statements(context, num_questions, difficulty, sentences)
             
@@ -89,8 +85,19 @@ class generate_true_false:
             print(f"Error: {e}")
 
 def main():
+    context = input(">> Enter context text: ").strip()
+    try:
+        num_questions = int(input(">> How many questions do you want to generate? ").strip())
+    except ValueError:
+        print("Please enter a valid integer for number of questions.")
+        return
+
+    difficulty = input(">> Enter difficulty level (easy / medium / hard): ").strip().lower()
+    if difficulty not in ["easy", "medium", "hard"]:
+        print("Invalid difficulty level.")
+        return
     quiz_generator = generate_true_false()
-    quiz_generator.run_quiz()
+    quiz_generator.run_quiz(context, num_questions, difficulty)
 
 if __name__ == "__main__":
     main()
