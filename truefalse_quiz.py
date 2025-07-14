@@ -6,7 +6,7 @@ nltk.download('punkt_tab', quiet=True)
 # Load NLI model
 nli = pipeline("text-classification", model="facebook/bart-large-mnli")
 
-class QuizGenerator:
+class generate_true_false:
     def __init__(self):
         pass
     def validate_inputs(self, context, num_questions, difficulty):
@@ -89,7 +89,7 @@ class QuizGenerator:
             print(f"Error: {e}")
 
 def main():
-    quiz_generator = QuizGenerator()
+    quiz_generator = generate_true_false()
     quiz_generator.run_quiz()
 
 if __name__ == "__main__":
