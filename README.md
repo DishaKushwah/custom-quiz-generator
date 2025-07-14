@@ -1,4 +1,4 @@
-# AI-Powered Custom Quiz Generator - QuizCraft Ai 
+# 📚AI-Powered Custom Quiz Generator - QuizCraft Ai 
 
 Generate personalized MCQs, short answer, and true/false questions using Hugging Face Transformers and a Streamlit UI.
 
@@ -32,7 +32,7 @@ streamlit run app.py
 ```
 ## Repo Struture
 
-ccustom-quiz-generator/
+custom-quiz-generator/
 │
 ├── app.py                          # Streamlit UI
 ├── fine_tune_and_evaluation.py     # Fine-tuning & evaluation script
