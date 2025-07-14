@@ -19,7 +19,10 @@ question_type = col1.selectbox("Question Type", ["Multiple Choice", "Short Answe
 difficulty = col2.selectbox("Difficulty", ["easy", "medium", "hard"])
 
 num_questions = st.slider("🔢 Number of Questions", min_value=1, max_value=10, value=3)
+#<<<<<<< main
+#=======
 
+#>>>>>>> main
 
 # Generate button
 if st.button("⚡ Generate Quiz"):
@@ -82,3 +85,7 @@ if st.button("⚡ Generate Quiz"):
             if questions:
                 st.download_button("⬇️ Download Quiz as PDF", output.getvalue(), file_name="quizcraft_quiz.pdf")
 
+#<<<<<<< main
+
+#=======
+#>>>>>>> main
