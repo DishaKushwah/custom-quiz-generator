@@ -3,7 +3,7 @@
 Generate personalized MCQs, short answer, and true/false questions using Hugging Face Transformers and a Streamlit UI.
 
 ## 💡 Features
-- T5-based Question generator (MCQ, short answer, true/false)
+- Question generator (MCQ, short answer, true/false)
 - Streamlit-based frontend
 - Cosine Similarity, BLEU-1, ROUGE -1 AND ROUGE-L Evaluation
 - Fine-tuned FLAN-T5 integration
@@ -45,7 +45,7 @@ custom-quiz-generator/
 ├── outputs/                        # Stores generated questions/outputs
 ├── valhalla/                       # T5-based fine-tuned models
 ├── requirements.txt                # Project dependencies
-├── FineTuneAndEvaluationscores_CLEANED.ipynb  # Evaluation notebook
+├── FineTuneAndEvaluationscores.ipynb  # Evaluation notebook
 ├── README.md                       # Project documentation
 └── .gitignore                      # Git ignore rules
 ```
