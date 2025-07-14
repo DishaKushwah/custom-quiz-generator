@@ -1,39 +1,51 @@
-# 🧠 AI-Powered Custom Quiz Generator
+# 📚AI-Powered Custom Quiz Generator - QuizCraft Ai 
 
-Generate personalized questions using Hugging Face Transformers and Streamlit UI.
+Generate personalized MCQs, short answer, and true/false questions using Hugging Face Transformers and a Streamlit UI.
 
 ## 💡 Features
-- T5-based question generator
-- Streamlit frontend
-- Cosine Similarity & BLEU Evaluation
-- Simulated RLHF via user feedback
+- T5-based Question generator (MCQ, short answer, true/false)
+- Streamlit-based frontend
+- Cosine Similarity, BLEU-1, ROUGE -1 AND ROUGE-L Evaluation
+- Fine-tuned FLAN-T5 integration
+- Customization: Select topic, difficulty, and number of questions
+
+
 
 ## 🚀 How to Run
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/custom-quiz-generator.git
 cd custom-quiz-generator
-python -m venv venv #run this command if u want to work in a virtual env
-source venv\Scripts\activate #run this command if u want to work in a virtual env
-pip install -r requirements.txt #to install all the required packages and libraries
 
-#Repo Struture
+# (Optional) Create virtual environment
+python -m venv venv
+source venv/Scripts/activate  # On Windows
+# or
+source venv/bin/activate      # On Mac/Linux
+
+# Install required dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run app.py
+
+```
+## Repo Struture
+```
 custom-quiz-generator/
 │
-├── app.py                        # Streamlit frontend
-├── model_utils.py               # Model loading, prompt creation, generation
-├── evaluation.py                # Cosine similarity & BLEU score calculations
-├── fine_tune.py                 # (Optional) fine-tuning script (even mock)
-├── feedback_log.csv             # Simulated RLHF storage
-├── requirements.txt             # All dependencies
-├── README.md                    # Project overview and usage guide
-│
-├── data/
-│   └── sample_qa_dataset.csv    # A small quiz dataset for testing/fine-tuning
-│
-├── outputs/
-│   └── generated_questions.csv  # Store generated questions if needed
-│
-├── models/                      # (Optional) Store custom fine-tuned models
-│
-└── assets/                      # Images/screenshots for README/demo
+├── app.py                          # Streamlit UI
+├── fine_tune_and_evaluation.py     # Fine-tuning & evaluation script
+├── flan_t5_finetuned_model/        # Directory storing the fine-tuned FLAN-T5 model
+├── mcq_generator.py                # MCQ generation script                  
+├── quiz_logic.py                   # Core quiz generation logic
+├── short_answer_generator.py       # Script for short answer generation
+├── truefalse_quiz.py               # True/False question generator
+├── train_v0.2_QuaC.json            # Training dataset
+├── outputs/                        # Stores generated questions/outputs
+├── valhalla/                       # T5-based fine-tuned models
+├── requirements.txt                # Project dependencies
+├── FineTuneAndEvaluationscores_CLEANED.ipynb  # Evaluation notebook
+├── README.md                       # Project documentation
+└── .gitignore                      # Git ignore rules
+```
