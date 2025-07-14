@@ -31,7 +31,7 @@ streamlit run app.py
 
 ```
 ## Repo Struture
-
+```
 custom-quiz-generator/
 │
 ├── app.py                          # Streamlit UI
@@ -48,3 +48,4 @@ custom-quiz-generator/
 ├── FineTuneAndEvaluationscores_CLEANED.ipynb  # Evaluation notebook
 ├── README.md                       # Project documentation
 └── .gitignore                      # Git ignore rules
+```
